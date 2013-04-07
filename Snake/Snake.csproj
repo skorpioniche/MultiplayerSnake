@@ -59,6 +59,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Block.cs" />
+    <Compile Include="Chat\ChatServer.cs" />
+    <Compile Include="Chat\Connection.cs" />
+    <Compile Include="Chat\StatusChangedEventArgs.cs" />
     <Compile Include="Direction.cs" />
     <Compile Include="Foods.cs" />
     <Compile Include="FormMain.cs">

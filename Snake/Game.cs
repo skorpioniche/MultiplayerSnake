@@ -37,9 +37,7 @@ namespace Snake
             this._gpPalette = g;
             snakes.Add(new PlayerSnake(width, height, size, Color.Red, g, 5,"player1")); 
             snakes.Add(new PlayerSnake(width, height, size, Color.Blue, g, 5,"player2"));
-            snakes.Add(new PlayerSnake(width, height, size, Color.Green, g, 5, "player3"));
-            Start();
-            
+            snakes.Add(new PlayerSnake(width, height, size, Color.Green, g, 5, "player3"));           
         }
 
 
