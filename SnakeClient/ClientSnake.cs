@@ -37,6 +37,7 @@ namespace SnakeClient
 
         private void GenereteBlockFromRequest(string codingBlockInString)
         {
+            allBlocks.Clear();
             for (int i = 0; i < codingBlockInString.Length; i++)
             {
                 switch (codingBlockInString[i])
