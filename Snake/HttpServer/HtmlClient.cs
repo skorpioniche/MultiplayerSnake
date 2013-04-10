@@ -55,18 +55,18 @@ namespace Snake.HttpServer
 
         private byte[] CreateResponse()
         {
-                        XDocument srcTree = new XDocument(
+            XDocument HtmlDocument = new XDocument(
             new XComment("This is a comment"),
-            new XElement("Root",
-            new XElement("Child1", "пизда рулю"),
-            new XElement("Child2", 2),
-            new XElement("Child3", 3),
-            new XElement("Child4", 4),
-            new XElement("Child5", 5),
-            new XElement("Info8", "info8")
+            new XElement("html",
+            new XElement("body",
+            new XElement("Height", PropertiesBlock.height),
+            new XElement("Width", PropertiesBlock.width),
+             new XElement("Size", PropertiesBlock.size),
+            new XElement("Block", Game.CodingBlockInString)
+            )
             )
             );
-            string Html = "<html><body><h1>It works!</h1></body></html>";
+            string Html = HtmlDocument.ToString();
             string Str = "HTTP/1.1 200 OK\nContent-type: text/html\nContent-Length:" + Html.Length.ToString() + "\n\n" + Html;
             byte[] Buffer = Encoding.ASCII.GetBytes(Str);
             return Buffer;

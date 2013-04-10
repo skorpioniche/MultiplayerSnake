@@ -7,6 +7,8 @@ using System.Drawing;
 using System.Net;
 using System.Text;
 using System.Windows.Forms;
+using Snake.HttpServer;
+using System.Threading;
 
 namespace Snake
 {
@@ -21,6 +23,7 @@ namespace Snake
 
         Game G;
         private delegate void UpdateStatusCallback(string strMessage);
+        private delegate void HttpServerDelegate(int port);
         private static IPAddress ipAddr = IPAddress.Parse("0.0.0.0");
         private ChatServer mainServer= new ChatServer(ipAddr);
         private void FormMain_Load(object sender, EventArgs e)
@@ -57,6 +60,13 @@ namespace Snake
         private void buttonStartGame(object sender, EventArgs e)
         {
             G.Start();
+            Thread Thread = new Thread(new ParameterizedThreadStart(StartServer));
+            Thread.Start(80);
+        }
+
+        private void StartServer(object obj)
+        {
+            new HtmlGetServer((int)obj);
         }
 
         private void buttonStartChat_Click(object sender, EventArgs e)

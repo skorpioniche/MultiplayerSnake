@@ -10,6 +10,7 @@ namespace Snake
     class Game
     {
         private List<PlayerSnake> snakes = new List<PlayerSnake>();
+        public static string CodingBlockInString;
         public List<PlayerSnake> Snakes
         {
             get
@@ -19,7 +20,7 @@ namespace Snake
             set { }
         }
 
-        private ArrayList allBlocks = new ArrayList(); //хранит все блоки
+        private ArrayList allBlocks = new ArrayList(); //хранит все блоки игроков
 
 
         private Timer timerBlock;
@@ -30,7 +31,7 @@ namespace Snake
         private int _width = 30;
         private int _height = 30;
         private int _level=5;
-        private int[] _speed = new int[] { 500, 450, 400, 350, 300, 250, 200, 150, 100, 50 };
+       // private int[] _speed = new int[] { 500, 450, 400, 350, 300, 250, 200, 150, 100, 50 };
 
         public Game(int width, int height, int size, Graphics g )
         {
@@ -44,7 +45,7 @@ namespace Snake
         public void Start()
         {
             Foods.Food.Add(Foods.GetFood(allBlocks));
-            timerBlock = new System.Timers.Timer(_speed[this._level]);
+            timerBlock = new System.Timers.Timer(500);//_speed[this._level]);
             timerBlock.Elapsed += new System.Timers.ElapsedEventHandler(OnBlockTimedEvent);
             timerBlock.AutoReset = true;
             timerBlock.Start();
@@ -62,6 +63,7 @@ namespace Snake
             PaintPalette(this._gpPalette);
             CheckEndGame();
             CheckRespFood();
+            UpdateStringAllBlock();
         }
 
         private void CheckRespFood()
@@ -102,7 +104,7 @@ namespace Snake
                 if (this._level != level)
                 {
                     this._level = level;
-                    this.timerBlock.Interval = this._speed[_level];
+                   // this.timerBlock.Interval = this._speed[_level];
                 }
             }
         }
@@ -143,6 +145,40 @@ namespace Snake
             }
             foreach (Block b in allBlocks)
                 b.Paint(gp);
+        }
+
+        //кодируем блоки как 9 -пусто
+        //8-еда
+        //7-0 номера индексов игроков
+        public void UpdateStringAllBlock()
+        {
+            Char[] CodingBlock = new Char[PropertiesBlock.width * PropertiesBlock.height];
+            for (int i=0; i<CodingBlock.Length;i++)
+                CodingBlock[i] = '9';
+            foreach (Block food in Foods.Food)
+            {
+                if ((food.Point.X>=0 && food.Point.X<PropertiesBlock.width)&&(food.Point.Y>=0 && food.Point.X<PropertiesBlock.height))
+                 CodingBlock[food.Point.X + food.Point.Y * PropertiesBlock.size] = '8';
+            }
+            foreach (Block b in allBlocks)
+            {
+                if ((b.Point.X >= 0 && b.Point.X < PropertiesBlock.width) && (b.Point.Y >= 0 && b.Point.X < PropertiesBlock.height))
+                 CodingBlock[b.Point.X + b.Point.Y * PropertiesBlock.size] = Convert.ToChar(GetIdByColor(b.ColorBlock).ToString());
+            }
+            CodingBlockInString = new string(CodingBlock);           
+        }
+
+        //определяет номер инекса игрока по цвету
+        public int GetIdByColor(Color colorSnake)
+        {
+            int i=0;
+            foreach (PlayerSnake sn in snakes)
+            {
+                if (sn.ColorSnake == colorSnake)
+                    return i;
+                i++;
+            }
+            return 9;
         }
 
 

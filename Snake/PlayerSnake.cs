@@ -14,6 +14,16 @@ namespace Snake
         private Graphics _gpPalette; 
         private ArrayList _blocks;
         private Color colorSnake;
+        public Color ColorSnake
+        {
+            get
+            {
+                return colorSnake;
+            }
+            set
+            {
+            }
+        }
         public ArrayList Blocks
         {
             get

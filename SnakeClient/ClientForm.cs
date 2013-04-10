@@ -16,6 +16,8 @@ namespace SnakeClient
 {
     public partial class ClientForm : Form
     {
+
+        #region temp
         // Will hold the user name
         private string UserName = "Unknown";
         private StreamWriter swSender;
@@ -180,5 +182,27 @@ namespace SnakeClient
                 SendMessage();
             }
         }
+
+        #endregion
+
+        private ClientSnake snake;
+        private void button1_Click(object sender, EventArgs e)
+        {
+            snake = new ClientSnake(Graphics.FromHwnd(this.pictureBox1.Handle), @"http://127.0.0.1/");
+            timerUpdate.Interval = 100;
+            timerUpdate.Start();
+        }
+
+        private void timerUpdate_Tick(object sender, EventArgs e)
+        {
+            try
+            {
+                snake.Update();
+            }
+            catch { timerUpdate.Stop(); }
+        }
+
+
+
     }
 }
