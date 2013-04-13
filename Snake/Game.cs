@@ -38,14 +38,15 @@ namespace Snake
             this._gpPalette = g;
             snakes.Add(new PlayerSnake(width, height, size, Color.Red, g, 5,"player1")); 
             snakes.Add(new PlayerSnake(width, height, size, Color.Blue, g, 5,"player2"));
-            snakes.Add(new PlayerSnake(width, height, size, Color.Green, g, 5, "player3"));           
+            snakes.Add(new PlayerSnake(width, height, size, Color.Green, g, 5, "player3"));
+            
         }
 
 
         public void Start()
         {
             Foods.Food.Add(Foods.GetFood(allBlocks));
-            timerBlock = new System.Timers.Timer(500);//_speed[this._level]);
+            timerBlock = new System.Timers.Timer(200);//_speed[this._level]);
             timerBlock.Elapsed += new System.Timers.ElapsedEventHandler(OnBlockTimedEvent);
             timerBlock.AutoReset = true;
             timerBlock.Start();

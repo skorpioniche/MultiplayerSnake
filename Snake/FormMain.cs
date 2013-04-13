@@ -20,7 +20,7 @@ namespace Snake
         {
             InitializeComponent();
         }
-
+        public static Random rand = new Random();
         Game G;
         private delegate void UpdateStatusCallback(string strMessage);
         private delegate void HttpServerDelegate(int port);
@@ -61,13 +61,70 @@ namespace Snake
         {
             G.Start();
             Thread Thread = new Thread(new ParameterizedThreadStart(StartServer));
-            Thread.Start(80);
+            Thread.Start(10050);               
+            StartBot();
+           
+
         }
 
         private void StartServer(object obj)
         {
             new HtmlGetServer((int)obj);
         }
+
+        #region Bot
+        private void StartBot()
+        {
+            Thread Thread = new Thread(new ParameterizedThreadStart(StartPlayer));
+            Thread.Start(0);
+        }
+
+        private void StartPlayer(object obj)
+        {
+            int i = (int)obj;
+            for (; ; )
+            {
+                foreach (PlayerSnake pl in G.Snakes)
+                {
+                    try
+                    {
+                        Thread.Sleep(200);
+                        pl.Direction = DirectionState.Up;
+                    }
+                    catch { }
+                }
+                foreach (PlayerSnake pl in G.Snakes)
+                {
+                    try
+                    {
+                        Thread.Sleep(200);
+                        pl.Direction = DirectionState.Left;
+                    }
+                    catch { }
+                }
+                foreach (PlayerSnake pl in G.Snakes)
+                {
+                    try
+                    {
+                        Thread.Sleep(200);
+                        pl.Direction = DirectionState.Down;
+                    }
+                    catch { }
+                }
+                foreach (PlayerSnake pl in G.Snakes)
+                {
+                    try
+                    {
+                        Thread.Sleep(200);
+                        pl.Direction = DirectionState.Right;
+                    }
+                    catch { }
+                }
+            }
+
+        }
+
+        #endregion Bot
 
         private void buttonStartChat_Click(object sender, EventArgs e)
         {

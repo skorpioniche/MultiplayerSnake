@@ -188,7 +188,7 @@ namespace SnakeClient
         private ClientSnake snake;
         private void button1_Click(object sender, EventArgs e)
         {
-            snake = new ClientSnake(Graphics.FromHwnd(this.pictureBox1.Handle), @"http://127.0.0.1/");
+            snake = new ClientSnake(Graphics.FromHwnd(this.pictureBox1.Handle), @"http://127.0.0.1:10050/");
             timerUpdate.Interval = 100;
             timerUpdate.Start();
         }
