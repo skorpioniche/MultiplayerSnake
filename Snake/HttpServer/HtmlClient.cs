@@ -47,10 +47,23 @@ namespace Snake.HttpServer
             string RequestUri = ReqMatch.Groups[1].Value;
             RequestUri = Uri.UnescapeDataString(RequestUri);
             Console.WriteLine(RequestUri); //
-
-            byte[] response = CreateResponse();
-            Client.GetStream().Write(response, 0, response.Length);
+            if (RequestUri == "//")
+            {
+                byte[] response = CreateResponse();
+                Client.GetStream().Write(response, 0, response.Length);
+            }
+            else
+            {
+                CreateResponseNavigete(RequestUri);
+            }
             Client.Close();
+        }
+
+        private void CreateResponseNavigete(string Request)
+        {
+           // "./id=1/position=w
+
+            
         }
 
         private byte[] CreateResponse()
