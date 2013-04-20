@@ -151,7 +151,7 @@ namespace Snake.Chat
         {
             work = true;
             IPAddress ipaLocal = ipAddress;
-            tlsClient = new TcpListener(5500);
+            tlsClient = new TcpListener(ipaLocal,5500);
             tlsClient.Start();
             ServRunning = true;
             thrListener = new Thread(KeepListening);

@@ -32,7 +32,6 @@ namespace SnakeClient
             string codingBlockInString = ParseXmlResponse(response);
             GenereteBlockFromRequest(codingBlockInString);
             PaintPalette(graphics);
-
         }
 
         private void GenereteBlockFromRequest(string codingBlockInString)

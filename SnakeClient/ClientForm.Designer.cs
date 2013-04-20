@@ -50,6 +50,7 @@
             this.txtUser.Size = new System.Drawing.Size(128, 20);
             this.txtUser.TabIndex = 15;
             this.txtUser.Text = "test";
+            this.txtUser.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ClientForm_KeyDown);
             // 
             // lblName
             // 
@@ -157,6 +158,7 @@
             this.Controls.Add(this.btnConnect);
             this.Name = "ClientForm";
             this.Text = "Snake";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ClientForm_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

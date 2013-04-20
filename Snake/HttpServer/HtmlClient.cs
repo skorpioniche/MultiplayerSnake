@@ -47,10 +47,53 @@ namespace Snake.HttpServer
             string RequestUri = ReqMatch.Groups[1].Value;
             RequestUri = Uri.UnescapeDataString(RequestUri);
             Console.WriteLine(RequestUri); //
-
-            byte[] response = CreateResponse();
+            byte[] response;
+            if (RequestUri == "//")
+            {
+               response = CreateResponse();               
+            }
+            else
+            {
+                response = CreateResponseOK();
+                CreateResponseDirection(RequestUri);
+            }
             Client.GetStream().Write(response, 0, response.Length);
             Client.Close();
+        }
+
+        private void CreateResponseDirection(string RequestUri)
+        {
+            try
+            {
+                int PlayerId = Convert.ToInt32(RequestUri[2]) - Convert.ToInt32('0');
+                DirectionState PlayerDirection = GetDirectionByRequest(RequestUri[3]);
+                PropertiesBlock.snakes[PlayerId].Direction = PlayerDirection;
+            }
+            catch
+            {
+            }
+        }
+
+        private DirectionState GetDirectionByRequest(char p)
+        {
+            DirectionState NewDirect = DirectionState.Up;
+            switch (p)
+            {
+                case 'u':
+                    NewDirect = DirectionState.Up;
+                    break;
+                case 'd':
+                    NewDirect = DirectionState.Down;
+                    break;
+                case 'l':
+                    NewDirect = DirectionState.Left;
+                    break;
+                case 'r':
+                    NewDirect = DirectionState.Right;
+                    break;
+            }
+            return NewDirect;
+
         }
 
         private byte[] CreateResponse()
@@ -67,6 +110,14 @@ namespace Snake.HttpServer
             )
             );
             string Html = HtmlDocument.ToString();
+            string Str = "HTTP/1.1 200 OK\nContent-type: text/html\nContent-Length:" + Html.Length.ToString() + "\n\n" + Html;
+            byte[] Buffer = Encoding.ASCII.GetBytes(Str);
+            return Buffer;
+        }
+
+        private byte[] CreateResponseOK()
+        {
+            string Html = " ";
             string Str = "HTTP/1.1 200 OK\nContent-type: text/html\nContent-Length:" + Html.Length.ToString() + "\n\n" + Html;
             byte[] Buffer = Encoding.ASCII.GetBytes(Str);
             return Buffer;

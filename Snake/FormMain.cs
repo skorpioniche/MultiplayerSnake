@@ -61,7 +61,8 @@ namespace Snake
         {
             G.Start();
             Thread Thread = new Thread(new ParameterizedThreadStart(StartServer));
-            Thread.Start(10050);               
+            Thread.Start(10050);
+            PropertiesBlock.snakes = G.Snakes;
             StartBot();
            
 
@@ -84,39 +85,51 @@ namespace Snake
             int i = (int)obj;
             for (; ; )
             {
+                int j = 0;
                 foreach (PlayerSnake pl in G.Snakes)
                 {
                     try
                     {
                         Thread.Sleep(200);
+                        if (j>0)
                         pl.Direction = DirectionState.Up;
+                        j++;
                     }
                     catch { }
                 }
+                j = 0;
                 foreach (PlayerSnake pl in G.Snakes)
                 {
                     try
                     {
                         Thread.Sleep(200);
+                        if (j > 0)
                         pl.Direction = DirectionState.Left;
+                        j++;
                     }
                     catch { }
                 }
+                j = 0;
                 foreach (PlayerSnake pl in G.Snakes)
                 {
                     try
                     {
                         Thread.Sleep(200);
+                        if (j > 0)
                         pl.Direction = DirectionState.Down;
+                        j++;
                     }
                     catch { }
                 }
+                j = 0;
                 foreach (PlayerSnake pl in G.Snakes)
                 {
                     try
                     {
                         Thread.Sleep(200);
+                        if (j > 0)
                         pl.Direction = DirectionState.Right;
+                        j++;
                     }
                     catch { }
                 }
@@ -137,6 +150,7 @@ namespace Snake
                 ChatServer.StatusChanged += new StatusChangedEventHandler(mainServer_StatusChanged);
                 mainServer.StartListening();
                 txtLog.AppendText("Monitoring for connections...\r\n");
+               // ChatServer.htUsers.
             }
         }
 

@@ -158,12 +158,12 @@ namespace Snake
                 CodingBlock[i] = '9';
             foreach (Block food in Foods.Food)
             {
-                if ((food.Point.X>=0 && food.Point.X<PropertiesBlock.width)&&(food.Point.Y>=0 && food.Point.X<PropertiesBlock.height))
+                if ((food.Point.X>=0 && food.Point.X<PropertiesBlock.width)&&(food.Point.Y>=0 && food.Point.Y<PropertiesBlock.height))
                     CodingBlock[food.Point.X + food.Point.Y * PropertiesBlock.width] = '8';
             }
             foreach (Block b in allBlocks)
             {
-                if ((b.Point.X >= 0 && b.Point.X < PropertiesBlock.width) && (b.Point.Y >= 0 && b.Point.X < PropertiesBlock.height))
+                if ((b.Point.X >= 0 && b.Point.X < PropertiesBlock.width) && (b.Point.Y >= 0 && b.Point.Y < PropertiesBlock.height))
                     CodingBlock[b.Point.X + b.Point.Y * PropertiesBlock.width] = Convert.ToChar(GetIdByColor(b.ColorBlock).ToString());
             }
             CodingBlockInString = new string(CodingBlock);           

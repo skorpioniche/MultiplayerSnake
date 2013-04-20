@@ -186,11 +186,13 @@ namespace SnakeClient
         #endregion
 
         private ClientSnake snake;
+        public String URLServer = @"http://127.0.0.1:10050/";
         private void button1_Click(object sender, EventArgs e)
         {
-            snake = new ClientSnake(Graphics.FromHwnd(this.pictureBox1.Handle), @"http://127.0.0.1:10050/");
+            snake = new ClientSnake(Graphics.FromHwnd(this.pictureBox1.Handle), URLServer);
             timerUpdate.Interval = 100;
             timerUpdate.Start();
+            URLServer = txtIp.Text + ":10050/";
         }
 
         private void timerUpdate_Tick(object sender, EventArgs e)
@@ -200,6 +202,11 @@ namespace SnakeClient
                 snake.Update();
             }
             catch { timerUpdate.Stop(); }
+        }
+
+        private void ClientForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            Direction.SetDirection(e,URLServer,"0");
         }
 
 

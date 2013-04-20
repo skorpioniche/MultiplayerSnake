@@ -32,6 +32,7 @@ namespace Snake
             this.txtLog = new System.Windows.Forms.TextBox();
             this.butonStartGame = new System.Windows.Forms.Button();
             this.buttonStartChat = new System.Windows.Forms.Button();
+            this.textBoxUsers = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -47,7 +48,7 @@ namespace Snake
             // 
             // txtLog
             // 
-            this.txtLog.Location = new System.Drawing.Point(629, 29);
+            this.txtLog.Location = new System.Drawing.Point(618, 26);
             this.txtLog.Multiline = true;
             this.txtLog.Name = "txtLog";
             this.txtLog.ScrollBars = System.Windows.Forms.ScrollBars.Both;
@@ -74,11 +75,20 @@ namespace Snake
             this.buttonStartChat.UseVisualStyleBackColor = true;
             this.buttonStartChat.Click += new System.EventHandler(this.buttonStartChat_Click);
             // 
+            // textBoxUsers
+            // 
+            this.textBoxUsers.Location = new System.Drawing.Point(629, 400);
+            this.textBoxUsers.Multiline = true;
+            this.textBoxUsers.Name = "textBoxUsers";
+            this.textBoxUsers.Size = new System.Drawing.Size(277, 117);
+            this.textBoxUsers.TabIndex = 7;
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(953, 622);
+            this.Controls.Add(this.textBoxUsers);
             this.Controls.Add(this.buttonStartChat);
             this.Controls.Add(this.butonStartGame);
             this.Controls.Add(this.txtLog);
@@ -101,6 +111,7 @@ namespace Snake
         private System.Windows.Forms.TextBox txtLog;
         private System.Windows.Forms.Button butonStartGame;
         private System.Windows.Forms.Button buttonStartChat;
+        private System.Windows.Forms.TextBox textBoxUsers;
     }
 }
 
