@@ -47,6 +47,7 @@ namespace Snake.HttpServer
             string RequestUri = ReqMatch.Groups[1].Value;
             RequestUri = Uri.UnescapeDataString(RequestUri);
             Console.WriteLine(RequestUri); //
+
             byte[] response;
             if (RequestUri == "//")
             {
@@ -93,8 +94,8 @@ namespace Snake.HttpServer
                     break;
             }
             return NewDirect;
-
         }
+
 
         private byte[] CreateResponse()
         {
