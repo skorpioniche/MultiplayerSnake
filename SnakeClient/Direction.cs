@@ -21,22 +21,22 @@ namespace SnakeClient
         {
             if (e.KeyCode == Keys.Up)
             {
-                string response = Http.SendGETRequest(url, id+"u");
+                string response = Http.SendGETRequest(url, id+"u/");
                 return;
             }
             if (e.KeyCode == Keys.Right)
             {
-                string response = Http.SendGETRequest(url, id + "r");
+                string response = Http.SendGETRequest(url, id + "r/");
                 return;
             }
             if (e.KeyCode == Keys.Down) 
             {
-                string response = Http.SendGETRequest(url, id + "d");
+                string response = Http.SendGETRequest(url, id + "d/");
                 return;
             }
             if (e.KeyCode == Keys.Left) 
             {
-                string response = Http.SendGETRequest(url, id + "l");
+                string response = Http.SendGETRequest(url, id + "l/");
                 return;
             }
         }

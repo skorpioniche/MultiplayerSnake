@@ -189,10 +189,11 @@ namespace SnakeClient
         public String URLServer = @"http://127.0.0.1:10050/";
         private void button1_Click(object sender, EventArgs e)
         {
+            URLServer = "http://"+txtIp.Text + ":10050/";
             snake = new ClientSnake(Graphics.FromHwnd(this.pictureBox1.Handle), URLServer);
             timerUpdate.Interval = 100;
             timerUpdate.Start();
-            URLServer = txtIp.Text + ":10050/";
+            
         }
 
         private void timerUpdate_Tick(object sender, EventArgs e)
