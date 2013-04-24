@@ -33,6 +33,7 @@ namespace Snake
             this.butonStartGame = new System.Windows.Forms.Button();
             this.buttonStartChat = new System.Windows.Forms.Button();
             this.textBoxUsers = new System.Windows.Forms.TextBox();
+            this.buttonRestart = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -83,11 +84,22 @@ namespace Snake
             this.textBoxUsers.Size = new System.Drawing.Size(277, 117);
             this.textBoxUsers.TabIndex = 7;
             // 
+            // buttonRestart
+            // 
+            this.buttonRestart.Location = new System.Drawing.Point(629, 356);
+            this.buttonRestart.Name = "buttonRestart";
+            this.buttonRestart.Size = new System.Drawing.Size(75, 23);
+            this.buttonRestart.TabIndex = 8;
+            this.buttonRestart.Text = "Restart";
+            this.buttonRestart.UseVisualStyleBackColor = true;
+            this.buttonRestart.Click += new System.EventHandler(this.buttonRestart_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(953, 622);
+            this.Controls.Add(this.buttonRestart);
             this.Controls.Add(this.textBoxUsers);
             this.Controls.Add(this.buttonStartChat);
             this.Controls.Add(this.butonStartGame);
@@ -112,6 +124,7 @@ namespace Snake
         private System.Windows.Forms.Button butonStartGame;
         private System.Windows.Forms.Button buttonStartChat;
         private System.Windows.Forms.TextBox textBoxUsers;
+        private System.Windows.Forms.Button buttonRestart;
     }
 }
 

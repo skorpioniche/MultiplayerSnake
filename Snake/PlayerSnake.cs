@@ -117,22 +117,25 @@ namespace Snake
 
         public void Move()
         {
-            Point p = NextPositionMove();
-            Block b = new Block(colorSnake, this._size, p);
-
-            Block foodEat=null;
-            foreach (Block food in Foods.Food)
+            if (!IsGameOver)
             {
-                if (food.Point == p)
-                  foodEat=food;                    
+                Point p = NextPositionMove();
+                Block b = new Block(colorSnake, this._size, p);
+
+                Block foodEat = null;
+                foreach (Block food in Foods.Food)
+                {
+                    if (food.Point == p)
+                        foodEat = food;
+                }
+                if (foodEat == null)
+                    this._blocks.RemoveAt(this._blocks.Count - 1); //удаляем блок если там не было еды
+                else
+                    Foods.Food.Remove(foodEat);
+                this._blocks.Insert(0, b);
+
+                this._directAble = true;
             }
-            if (foodEat == null)
-                this._blocks.RemoveAt(this._blocks.Count - 1); //удаляем блок если там не было еды
-            else
-                Foods.Food.Remove(foodEat);
-            this._blocks.Insert(0, b);
-    
-            this._directAble = true; 
         }
 
 

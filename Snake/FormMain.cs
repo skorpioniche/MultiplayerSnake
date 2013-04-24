@@ -9,6 +9,7 @@ using System.Text;
 using System.Windows.Forms;
 using Snake.HttpServer;
 using System.Threading;
+using System.Net.Sockets;
 
 namespace Snake
 {
@@ -19,6 +20,7 @@ namespace Snake
         public FormMain()
         {
             InitializeComponent();
+            Application.ApplicationExit += new EventHandler(this.OnApplicationExit);
         }
         public static Random rand = new Random();
         Game G;
@@ -26,6 +28,16 @@ namespace Snake
         private delegate void HttpServerDelegate(int port);
         private static IPAddress ipAddr = IPAddress.Parse("0.0.0.0");
         private ChatServer mainServer= new ChatServer(ipAddr);
+
+        private Thread ThreadServerGamer;
+        private Thread BotThread;
+        private HtmlGetServer ServerHttp;
+        private TcpListener ServerListner;
+        
+        private void OnApplicationExit(object sender, EventArgs e)
+        {
+            buttonRestart_Click(sender, e);
+        }
         private void FormMain_Load(object sender, EventArgs e)
         {
 
@@ -41,6 +53,7 @@ namespace Snake
 
 
         }
+
 
         private void FormMain_KeyDown(object sender, KeyEventArgs e)
         {
@@ -60,24 +73,24 @@ namespace Snake
         private void buttonStartGame(object sender, EventArgs e)
         {
             G.Start();
-            Thread Thread = new Thread(new ParameterizedThreadStart(StartServer));
-            Thread.Start(10050);
+            ThreadServerGamer = new Thread(new ParameterizedThreadStart(StartServer));
+            ThreadServerGamer.Start(10050);
             PropertiesBlock.snakes = G.Snakes;
             StartBot();
-           
-
         }
 
         private void StartServer(object obj)
         {
-            new HtmlGetServer((int)obj);
+            if (ServerListner==null)
+            ServerListner = new TcpListener(IPAddress.Any, (int)obj);
+            ServerHttp = new HtmlGetServer((int)obj, ServerListner);
         }
 
         #region Bot
         private void StartBot()
         {
-            Thread Thread = new Thread(new ParameterizedThreadStart(StartPlayer));
-            Thread.Start(0);
+             BotThread = new Thread(new ParameterizedThreadStart(StartPlayer));
+             BotThread.Start(0);
         }
 
         private void StartPlayer(object obj)
@@ -163,6 +176,19 @@ namespace Snake
         {
             txtLog.AppendText(strMessage + "\r\n");
         }
+
+        private void buttonRestart_Click(object sender, EventArgs e)
+        {
+            BotThread.Abort();
+
+
+            ServerListner.Stop();
+            G.Dispose();
+            ThreadServerGamer.Abort();
+
+        }
+
+
 
     }
 }

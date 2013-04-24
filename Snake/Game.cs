@@ -28,25 +28,39 @@ namespace Snake
         private int timeRespFood = 10;
         private Graphics _gpPalette;
         private Color _bgColor = Color.White; 
-        private int _width = 30;
-        private int _height = 30;
+        private int width = 30;
+        private int height = 30;
+        private int size = 30;
         private int _level=5;
        // private int[] _speed = new int[] { 500, 450, 400, 350, 300, 250, 200, 150, 100, 50 };
+        private int speed = 400;
 
         public Game(int width, int height, int size, Graphics g )
         {
+            this.width = width;
+            this.height = height;
+            this.size = size;
             this._gpPalette = g;
-            snakes.Add(new PlayerSnake(width, height, size, Color.Red, g, 5,"player1")); 
-            snakes.Add(new PlayerSnake(width, height, size, Color.Blue, g, 5,"player2"));
-            snakes.Add(new PlayerSnake(width, height, size, Color.Green, g, 5, "player3"));
-            
+        }
+
+        public virtual void Dispose()
+        {
+            timerBlock.Stop();
+            snakes.Clear();
+            allBlocks.Clear();
+            Foods.Food.Clear();
+            _gpPalette.Clear(this._bgColor);
         }
 
 
         public void Start()
         {
+            snakes.Add(new PlayerSnake(width, height, size, Color.Red, _gpPalette, 5, "player1"));
+            snakes.Add(new PlayerSnake(width, height, size, Color.Blue, _gpPalette, 5, "player2"));
+            snakes.Add(new PlayerSnake(width, height, size, Color.Green, _gpPalette, 5, "player3"));
+
             Foods.Food.Add(Foods.GetFood(allBlocks));
-            timerBlock = new System.Timers.Timer(200);//_speed[this._level]);
+            timerBlock = new System.Timers.Timer(speed);//_speed[this._level]);
             timerBlock.Elapsed += new System.Timers.ElapsedEventHandler(OnBlockTimedEvent);
             timerBlock.AutoReset = true;
             timerBlock.Start();
@@ -79,28 +93,25 @@ namespace Snake
 
         private void CheckEndGame()
         {
-            List<PlayerSnake> newSnakes = new List<PlayerSnake>();
+            List<String> SnakeLive = new List<String>();
             foreach (PlayerSnake snake in snakes)
             {
                 if (!snake.IsGameOver)
-                 //   System.Windows.Forms.MessageBox.Show(snake.NamePlayer + "Game Over");
-               // else
-                    newSnakes.Add(snake);
+                    SnakeLive.Add(snake.NamePlayer);
             }
 
-            if (newSnakes.Count < 2)
+            if (SnakeLive.Count < 2)
             {
                 this.timerBlock.Stop();
                 this.timerBlock.Dispose();
-                if (newSnakes.Count==1)
-                    System.Windows.Forms.MessageBox.Show(newSnakes[0].NamePlayer + "  win!");
-                if (newSnakes.Count==0)
+                if (SnakeLive.Count == 1)
+                    System.Windows.Forms.MessageBox.Show(SnakeLive[0] + "  win!");
+                if (SnakeLive.Count == 0)
                     System.Windows.Forms.MessageBox.Show("AllPlayer crash!");
                 return;
             }
             else
             {
-                snakes = newSnakes;
                 int level = allBlocks.Count / 10 % 10;
                 if (this._level != level)
                 {
@@ -112,7 +123,7 @@ namespace Snake
 
         private bool CheckDead(Block head)
         {
-            if (head.Point.X < 0 || head.Point.Y < 0 || head.Point.X >= _width || head.Point.Y >= _height)
+            if (head.Point.X < 0 || head.Point.Y < 0 || head.Point.X >= width || head.Point.Y >= height)
                 return true;
             foreach (Block block in allBlocks)
             {
@@ -132,7 +143,6 @@ namespace Snake
                 foreach (Block block in snake.Blocks)
                     allBlocks.Add(block);
             }
-
         }
 
 

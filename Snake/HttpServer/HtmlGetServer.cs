@@ -9,11 +9,13 @@ namespace Snake.HttpServer
 {
     class HtmlGetServer
     {
-        TcpListener Listener; 
+        private TcpListener Listener;
 
-        public HtmlGetServer(int Port)
+        public HtmlGetServer(int Port, TcpListener listener)
         {
-            Listener = new TcpListener(IPAddress.Any, Port); 
+            Listener = listener;
+            if (Listener==null)
+                Listener = new TcpListener(IPAddress.Any, Port); 
             Listener.Start();
 
             while (true)
@@ -32,6 +34,7 @@ namespace Snake.HttpServer
                 */
             }
         }
+
 
         static void ClientThread(Object StateInfo)
         {
