@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
 using System.Timers;
+using Snake.Chat;
 
 namespace Snake
 {
@@ -19,8 +20,19 @@ namespace Snake
             }
             set { }
         }
-
+        private delegate void EventTimer(object source, ElapsedEventArgs e);
         private ArrayList allBlocks = new ArrayList(); //хранит все блоки игроков
+
+        private int countPlayer;
+        private int timeOnStartGame;
+        public int TimeOnStartGame
+        {
+            get { return timeOnStartGame; }
+            set { }
+        }
+        private int defaultTimeOnStartGame=10; //время до начала игры
+        
+
 
 
         private Timer timerBlock;
@@ -46,26 +58,66 @@ namespace Snake
         public virtual void Dispose()
         {
             timerBlock.Stop();
+            DeleteAll();        
+        }
+        private void DeleteAll()
+        {
             snakes.Clear();
             allBlocks.Clear();
             Foods.Food.Clear();
             _gpPalette.Clear(this._bgColor);
+            PropertiesBlock.GameIsStarted = false;
         }
+
 
 
         public void Start()
         {
-            snakes.Add(new PlayerSnake(width, height, size, Color.Red, _gpPalette, 5, "player1"));
-            snakes.Add(new PlayerSnake(width, height, size, Color.Blue, _gpPalette, 5, "player2"));
-            snakes.Add(new PlayerSnake(width, height, size, Color.Green, _gpPalette, 5, "player3"));
-
+            SetTimerEvent(StartGameTimedEvent, 1000);
             Foods.Food.Add(Foods.GetFood(allBlocks));
-            timerBlock = new System.Timers.Timer(speed);//_speed[this._level]);
-            timerBlock.Elapsed += new System.Timers.ElapsedEventHandler(OnBlockTimedEvent);
+           
+
+        }
+        private void SetTimerEvent(EventTimer timerEvent, int timerTimeTick)
+        {
+            if (timerBlock!=null)
+                timerBlock.Stop();
+            timerBlock = new System.Timers.Timer(timerTimeTick);
+            timerBlock.Elapsed += new System.Timers.ElapsedEventHandler(timerEvent);
             timerBlock.AutoReset = true;
             timerBlock.Start();
         }
 
+
+        private void StartGameTimedEvent(object source, ElapsedEventArgs e)
+        {
+            if (snakes.Count > 1)
+            {
+                if (countPlayer != snakes.Count)
+                {
+                    timeOnStartGame = defaultTimeOnStartGame;
+                    countPlayer = snakes.Count;
+                }
+                else
+                {
+                    if (timeOnStartGame > 0)
+                    {
+                        ChatServer.SendAdminMessage("Starting game:" + timeOnStartGame.ToString());
+                        timeOnStartGame--;
+                    }
+                    else
+                    {
+                        ChatServer.SendAdminMessage("Start Game!");
+                        PropertiesBlock.GameIsStarted = true;
+                        SetTimerEvent(OnBlockTimedEvent, speed);
+                    }
+
+                }
+            }
+            else
+                timeOnStartGame = defaultTimeOnStartGame;
+
+        }
 
         private void OnBlockTimedEvent(object source, ElapsedEventArgs e)
         {
@@ -105,9 +157,11 @@ namespace Snake
                 this.timerBlock.Stop();
                 this.timerBlock.Dispose();
                 if (SnakeLive.Count == 1)
-                    System.Windows.Forms.MessageBox.Show(SnakeLive[0] + "  win!");
+                    ChatServer.SendAdminMessage(SnakeLive[0] + "  win!");
                 if (SnakeLive.Count == 0)
-                    System.Windows.Forms.MessageBox.Show("AllPlayer crash!");
+                    ChatServer.SendAdminMessage("AllPlayer crash!");
+                DeleteAll();
+                SetTimerEvent(StartGameTimedEvent, 1000);
                 return;
             }
             else
@@ -191,6 +245,8 @@ namespace Snake
             }
             return 9;
         }
+
+
 
 
 

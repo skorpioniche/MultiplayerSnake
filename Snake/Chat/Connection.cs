@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Net.Sockets;
 using System.Text;
@@ -57,7 +58,7 @@ namespace Snake.Chat
                     CloseConnection();
                     return;
                 }
-                else if (currUser == "Administrator")
+                else if (currUser == "Admin")
                 {
                     // 0 means not connected
                     swSender.WriteLine("0|This username is reserved.");
@@ -65,14 +66,24 @@ namespace Snake.Chat
                     CloseConnection();
                     return;
                 }
+                else if (PropertiesBlock.GameIsStarted)
+                {
+                    swSender.WriteLine("0|Game is started. Try later.");
+                    swSender.Flush();
+                    CloseConnection();
+                    return;
+                }
                 else
                 {
                     // 1 means connected successfully
-                    swSender.WriteLine("1");
+                    int idSnake = PropertiesBlock.snakes.Count;
+                    PropertiesBlock.snakes.Add(new PlayerSnake(PropertiesBlock.width, PropertiesBlock.height, PropertiesBlock.size, PropertiesBlock.GetColorByCountSnake(idSnake), PropertiesBlock.gpPalette, 5, currUser));
+                    swSender.WriteLine((idSnake + 1).ToString());
                     swSender.Flush();
 
                     // Add the user to the hash tables and start listening for messages from him
                     ChatServer.AddUser(tcpClient, currUser);
+
                 }
             }
             else

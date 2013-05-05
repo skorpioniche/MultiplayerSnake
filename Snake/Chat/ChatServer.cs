@@ -12,9 +12,9 @@ namespace Snake.Chat
     class ChatServer
     {
         // This hash table stores users and connections (browsable by user)
-        public static Hashtable htUsers = new Hashtable(30); // 30 users at one time limit
+        public static Hashtable htUsers = new Hashtable(8); // 8 users at one time limit
         // This hash table stores connections and users (browsable by connection)
-        public static Hashtable htConnections = new Hashtable(30); // 30 users at one time limit
+        public static Hashtable htConnections = new Hashtable(8); // 8 users at one time limit
         // Will store the IP address passed to it
         private IPAddress ipAddress;
         private TcpClient tcpClient;
@@ -54,8 +54,15 @@ namespace Snake.Chat
             if (htConnections[tcpUser] != null)
             {
                 // First show the information and tell the other users about the disconnection
-                SendAdminMessage(htConnections[tcpUser] + " has left");
+                 string name =(string)htConnections[tcpUser];
+                SendAdminMessage(name + " has left");
 
+                if ((!PropertiesBlock.GameIsStarted )&&(PropertiesBlock.snakes.Count>0))
+                    try
+                    {
+                        PropertiesBlock.snakes.RemoveAt(PropertiesBlock.GetIdByName(name));
+                    }
+                    catch { }
                 // Remove the user from the hash table
                 ChatServer.htUsers.Remove(ChatServer.htConnections[tcpUser]);
                 ChatServer.htConnections.Remove(tcpUser);
@@ -79,7 +86,7 @@ namespace Snake.Chat
             StreamWriter swSenderSender;
 
             // First of all, show in our application who says what
-            e = new StatusChangedEventArgs("Administrator: " + Message);
+            e = new StatusChangedEventArgs("Admin: " + Message);
             OnStatusChanged(e);
 
             // Create an array of TCP clients, the size of the number of users we have
@@ -99,7 +106,7 @@ namespace Snake.Chat
                     }
                     // Send the message to the current user in the loop
                     swSenderSender = new StreamWriter(tcpClients[i].GetStream());
-                    swSenderSender.WriteLine("Administrator: " + Message);
+                    swSenderSender.WriteLine("Admin: " + Message);
                     swSenderSender.Flush();
                     swSenderSender = null;
                 }

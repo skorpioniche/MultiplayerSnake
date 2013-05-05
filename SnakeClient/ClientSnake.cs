@@ -44,13 +44,28 @@ namespace SnakeClient
                     case '9':                   
                         break;
                     case '0':
-                        allBlocks.Add(new Block(Color.Red,sizeBlock,CalcPoint(i)));
+                        allBlocks.Add(new Block(Color.Red, sizeBlock, CalcPoint(i)));
                         break;
                     case '1':
                         allBlocks.Add(new Block(Color.Blue, sizeBlock, CalcPoint(i)));
                         break;
                     case '2':
                         allBlocks.Add(new Block(Color.Green, sizeBlock, CalcPoint(i)));
+                        break;
+                    case '3':
+                        allBlocks.Add(new Block(Color.Brown, sizeBlock, CalcPoint(i)));
+                        break;
+                    case '4':
+                        allBlocks.Add(new Block(Color.Gold, sizeBlock, CalcPoint(i)));
+                        break;
+                    case '5':
+                        allBlocks.Add(new Block(Color.Ivory, sizeBlock, CalcPoint(i)));
+                        break;
+                    case '6':
+                        allBlocks.Add(new Block(Color.Magenta, sizeBlock, CalcPoint(i)));
+                        break;
+                    case '7':
+                        allBlocks.Add(new Block(Color.Silver, sizeBlock, CalcPoint(i)));
                         break;
                     case '8':
                         allBlocks.Add(new Block(Color.Black, sizeBlock, CalcPoint(i)));
@@ -78,7 +93,14 @@ namespace SnakeClient
         {
             gp.Clear(Color.White);
             foreach (Block b in allBlocks)
+            {
                 b.Paint(gp);
+            }
+            
+
         }
+
+
+
     }
 }

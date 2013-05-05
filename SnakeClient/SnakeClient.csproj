@@ -55,6 +55,7 @@
     <Compile Include="Direction.cs" />
     <Compile Include="Http.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="PropertiesSnake.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="ClientForm.resx">
       <DependentUpon>ClientForm.cs</DependentUpon>

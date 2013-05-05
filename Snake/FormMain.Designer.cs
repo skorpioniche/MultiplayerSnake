@@ -30,7 +30,6 @@ namespace Snake
         {
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.txtLog = new System.Windows.Forms.TextBox();
-            this.butonStartGame = new System.Windows.Forms.Button();
             this.buttonStartChat = new System.Windows.Forms.Button();
             this.textBoxUsers = new System.Windows.Forms.TextBox();
             this.buttonRestart = new System.Windows.Forms.Button();
@@ -56,23 +55,13 @@ namespace Snake
             this.txtLog.Size = new System.Drawing.Size(288, 213);
             this.txtLog.TabIndex = 4;
             // 
-            // butonStartGame
-            // 
-            this.butonStartGame.Location = new System.Drawing.Point(629, 327);
-            this.butonStartGame.Name = "butonStartGame";
-            this.butonStartGame.Size = new System.Drawing.Size(75, 23);
-            this.butonStartGame.TabIndex = 5;
-            this.butonStartGame.Text = "Start Game";
-            this.butonStartGame.UseVisualStyleBackColor = true;
-            this.butonStartGame.Click += new System.EventHandler(this.buttonStartGame);
-            // 
             // buttonStartChat
             // 
-            this.buttonStartChat.Location = new System.Drawing.Point(722, 327);
+            this.buttonStartChat.Location = new System.Drawing.Point(629, 324);
             this.buttonStartChat.Name = "buttonStartChat";
             this.buttonStartChat.Size = new System.Drawing.Size(75, 23);
             this.buttonStartChat.TabIndex = 6;
-            this.buttonStartChat.Text = "Start Chat";
+            this.buttonStartChat.Text = "StartServer";
             this.buttonStartChat.UseVisualStyleBackColor = true;
             this.buttonStartChat.Click += new System.EventHandler(this.buttonStartChat_Click);
             // 
@@ -86,11 +75,11 @@ namespace Snake
             // 
             // buttonRestart
             // 
-            this.buttonRestart.Location = new System.Drawing.Point(629, 356);
+            this.buttonRestart.Location = new System.Drawing.Point(629, 353);
             this.buttonRestart.Name = "buttonRestart";
             this.buttonRestart.Size = new System.Drawing.Size(75, 23);
             this.buttonRestart.TabIndex = 8;
-            this.buttonRestart.Text = "Restart";
+            this.buttonRestart.Text = "StopServer";
             this.buttonRestart.UseVisualStyleBackColor = true;
             this.buttonRestart.Click += new System.EventHandler(this.buttonRestart_Click);
             // 
@@ -102,7 +91,6 @@ namespace Snake
             this.Controls.Add(this.buttonRestart);
             this.Controls.Add(this.textBoxUsers);
             this.Controls.Add(this.buttonStartChat);
-            this.Controls.Add(this.butonStartGame);
             this.Controls.Add(this.txtLog);
             this.Controls.Add(this.pictureBox1);
             this.KeyPreview = true;
@@ -121,7 +109,6 @@ namespace Snake
 
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.TextBox txtLog;
-        private System.Windows.Forms.Button butonStartGame;
         private System.Windows.Forms.Button buttonStartChat;
         private System.Windows.Forms.TextBox textBoxUsers;
         private System.Windows.Forms.Button buttonRestart;

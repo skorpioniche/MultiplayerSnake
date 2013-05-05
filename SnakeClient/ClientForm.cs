@@ -57,11 +57,20 @@ namespace SnakeClient
             if (Connected == false)
             {
                 // Initialize the connection
-                InitializeConnection();
+                try
+                {
+                    InitializeConnection();
+                    ConnectOnServerGame();
+                }
+                catch (Exception error)
+                {
+                    txtLog.Text += error.Message;
+                }
             }
             else // We are connected, thus disconnect
             {
                 CloseConnection("Disconnected at user's request.");
+                timerUpdate.Stop();
             }
         }
 
@@ -102,9 +111,10 @@ namespace SnakeClient
             // If the first character of the response is 1, connection was successful
             string ConResponse = srReceiver.ReadLine();
             // If the first character is a 1, connection was successful
-            if (ConResponse[0] == '1')
+            if (Convert.ToInt32(ConResponse[0]) - Convert.ToInt32('0') > 0)
             {
                 // Update the form to tell it we are now connected
+                PropertiesSnake.idSnake = Convert.ToInt32(ConResponse[0]) - Convert.ToInt32('0') - 1;
                 this.Invoke(new UpdateLogCallback(this.UpdateLog), new object[] { "Connected Successfully!" });
             }
             else // If the first character is not a 1 (probably a 0), the connection was unsuccessful
@@ -189,11 +199,16 @@ namespace SnakeClient
         public String URLServer = @"http://127.0.0.1:10050/";
         private void button1_Click(object sender, EventArgs e)
         {
-            URLServer = "http://"+txtIp.Text + ":10050/";
+
+            
+        }
+
+        private void ConnectOnServerGame()
+        {
+            URLServer = "http://" + txtIp.Text + ":10050/";
             snake = new ClientSnake(Graphics.FromHwnd(this.pictureBox1.Handle), URLServer);
             timerUpdate.Interval = 100;
             timerUpdate.Start();
-            
         }
 
         private void timerUpdate_Tick(object sender, EventArgs e)
@@ -202,12 +217,13 @@ namespace SnakeClient
             {
                 snake.Update();
             }
-            catch { timerUpdate.Stop(); }
+            catch { //timerUpdate.Stop();
+            }
         }
 
         private void ClientForm_KeyDown(object sender, KeyEventArgs e)
         {
-            Direction.SetDirection(e,URLServer,"0");
+            Direction.SetDirection(e, URLServer, PropertiesSnake.idSnake.ToString());
         }
 
 

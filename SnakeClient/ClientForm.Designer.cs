@@ -39,7 +39,6 @@
             this.btnConnect = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.timerUpdate = new System.Windows.Forms.Timer(this.components);
-            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -71,6 +70,7 @@
             this.txtLog.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.txtLog.Size = new System.Drawing.Size(275, 282);
             this.txtLog.TabIndex = 13;
+            this.txtLog.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ClientForm_KeyDown);
             // 
             // txtMessage
             // 
@@ -79,6 +79,7 @@
             this.txtMessage.Name = "txtMessage";
             this.txtMessage.Size = new System.Drawing.Size(194, 20);
             this.txtMessage.TabIndex = 12;
+            this.txtMessage.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ClientForm_KeyDown);
             // 
             // btnSend
             // 
@@ -131,22 +132,11 @@
             // 
             this.timerUpdate.Tick += new System.EventHandler(this.timerUpdate_Tick);
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(52, 439);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(113, 25);
-            this.button1.TabIndex = 17;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
             // ClientForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(990, 622);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.txtUser);
             this.Controls.Add(this.lblName);
@@ -177,7 +167,6 @@
         private System.Windows.Forms.Button btnConnect;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Timer timerUpdate;
-        private System.Windows.Forms.Button button1;
     }
 }
 

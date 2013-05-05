@@ -52,6 +52,7 @@ namespace Snake
             G = new Game(width, height, size, Graphics.FromHwnd(this.pictureBox1.Handle));
 
 
+
         }
 
 
@@ -72,13 +73,18 @@ namespace Snake
 
         private void buttonStartGame(object sender, EventArgs e)
         {
+            
+        }
+
+        private void StartGame()
+        {
             G.Start();
             ThreadServerGamer = new Thread(new ParameterizedThreadStart(StartServer));
             ThreadServerGamer.Start(10050);
             PropertiesBlock.snakes = G.Snakes;
-            StartBot();
+            PropertiesBlock.gpPalette = Graphics.FromHwnd(this.pictureBox1.Handle);
+            //  StartBot();
         }
-
         private void StartServer(object obj)
         {
             if (ServerListner==null)
@@ -160,6 +166,7 @@ namespace Snake
             }
             else
             {
+                StartGame();
                 ChatServer.StatusChanged += new StatusChangedEventHandler(mainServer_StatusChanged);
                 mainServer.StartListening();
                 txtLog.AppendText("Monitoring for connections...\r\n");
@@ -179,11 +186,14 @@ namespace Snake
 
         private void buttonRestart_Click(object sender, EventArgs e)
         {
+            if (BotThread!=null)
             BotThread.Abort();
 
-
+            if (ServerListner!=null)
             ServerListner.Stop();
+            if (G!=null)
             G.Dispose();
+            if (ThreadServerGamer!=null)
             ThreadServerGamer.Abort();
 
         }

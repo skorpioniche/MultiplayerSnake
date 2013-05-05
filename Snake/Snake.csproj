@@ -79,7 +79,7 @@
     <Compile Include="HttpServer\HtmlGetServer.cs" />
     <Compile Include="PlayerSnake.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="Properties.cs" />
+    <Compile Include="PropertiesBlock.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FormMain.resx">
       <SubType>Designer</SubType>
